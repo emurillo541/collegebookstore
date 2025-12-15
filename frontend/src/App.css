@@ -1,0 +1,363 @@
+/* ---- Color vars and global settings ---- */
+:root {
+    --primary-navy: #001F3F;
+    --accent-gold: #FFC300;
+    --delete-red: #CC0000;
+    --page-background: #FAF9F6;
+    --container-white: #FFFFFF;
+    --light-text: #FFFFFF;
+    --dark-text: #343a40;
+    --muted-text: #6C757D;
+    --border-color: #dee2e6;
+    --font-body: sans-serif;
+    --font-title: serif;
+}
+
+/* ---- Base styling ---- */
+body {
+    background-color: var(--page-background);
+    font-family: var(--font-body);
+    color: var(--dark-text);
+    margin: 0;
+}
+
+#root {
+    text-align: center;
+}
+
+/* ---- Homepage layout ---- */
+.home-page-container {
+    background-color: var(--container-white);
+    padding: 40px 20px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    margin: 2rem auto;
+    max-width: 1100px;
+}
+
+.home-page-container h1 {
+    color: var(--primary-navy);
+    font-family: var(--font-title);
+    font-size: 2.8em;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.home-page-container p {
+    color: var(--muted-text);
+    font-size: 1.05rem;
+    margin-bottom: 40px;
+}
+
+/*
+* ---- NEW AUTH STYLING ---- 
+*/
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-navy);
+    padding: 20px 0; /* Reduced padding here */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 100%;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Space out the links and the auth section */
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Constrain the width of the navbar content */
+    padding: 0 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.auth-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.auth-section p {
+    color: var(--light-text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.auth-section button {
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 2px solid var(--accent-gold);
+    background-color: var(--accent-gold);
+    color: var(--primary-navy);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+.auth-section button:hover,
+.auth-section button:focus {
+    background-color: #e6b200; /* Darker gold */
+    border-color: #e6b200;
+}
+/*
+* ---- END NEW AUTH STYLING ---- 
+*/
+
+nav a {
+    text-decoration: none;
+    color: var(--light-text);
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+nav a:hover,
+nav a:focus {
+    color: var(--accent-gold);
+}
+
+nav a.active {
+    color: var(--accent-gold);
+    border-bottom: 3px solid var(--accent-gold);
+}
+
+/* ---- Section headers ---- */
+.entity-section-heading {
+    font-family: var(--font-title);
+    color: var(--primary-navy);
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+/* ---- Core entity 2x2 grid ---- */
+.entity-list-row {
+    margin-bottom: 30px;
+}
+
+.core-list-row {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 350px);
+    grid-template-rows: repeat(2, auto);
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.core-list-row li {
+    width: 100%;
+}
+
+.core-list-row li a {
+    min-height: 100px;
+    font-size: 1.1rem;
+}
+
+/* ---- Sales & Restock list layout ---- */
+.transactional-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.transactional-list li {
+    width: 100%;
+}
+
+.transactional-list li a {
+    min-height: 110px;
+}
+
+/* ---- Shared box/button styling ---- */
+.core-list-row li a,
+.transactional-list li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 18px 25px;
+    background-color: var(--primary-navy);
+    border: 2px solid var(--primary-navy);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--light-text);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.core-list-row li a:hover,
+.transactional-list li a:hover,
+.core-list-row li a:focus,
+.transactional-list li a:focus {
+    background-color: var(--container-white);
+    color: var(--primary-navy);
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+/* ---- Mobile tweaks ---- */
+@media (max-width: 850px) {
+    .core-list-row,
+    .transactional-list {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    /* NEW: Adjustments for mobile header */
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .nav-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px 20px;
+    }
+    
+    .auth-section {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
+
+/* ---- Forms & tables ---- */
+.form-grid { 
+    display: grid;
+    gap: 20px; 
+    margin-bottom: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.add-form-section form,
+.edit-form-section form {
+    margin-bottom: 20px;
+    padding: 30px; 
+    border: 1px solid #E0E0E0; 
+    border-radius: 10px; 
+    background-color: var(--container-white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px; 
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 10px;
+}
+
+button {
+    padding: 12px 25px; 
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button[type="submit"] {
+    background-color: var(--primary-navy); 
+    color: white;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+    background-color: #003366; 
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.delete-btn {
+    background-color: var(--delete-red); 
+    color: white;
+}
+
+.delete-btn:hover,
+.delete-btn:focus {
+    background-color: #A30000;
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.page-table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;
+    margin-top: 30px;
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-table thead th {
+    background-color: var(--primary-navy); 
+    color: var(--light-text);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ---- Buttons on homepage ---- */
+.critical-action-separator {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 80px auto 40px auto;
+    max-width: 50%;
+}
+
+.home-action-buttons {
+    margin-top: 0;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.home-action-buttons .reset-btn {
+    padding: 15px 30px;
+    font-weight: 700;
+    border-radius: 8px;
+    text-transform: uppercase;
+    background-color: var(--delete-red);
+    color: white;
+    border: 2px solid var(--delete-red);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.home-action-buttons .reset-btn:hover,
+.home-action-buttons .reset-btn:focus {
+    background-color: #A30000;
+    transform: translateY(-2px);
+    outline: none;
+}

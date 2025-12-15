@@ -1,0 +1,205 @@
+/* Shared color variables for theme consistency */
+:root {
+    --primary-color: #1A5276;
+    --primary-hover: #2980B9;
+    --accent-color: #3498DB;
+    --accent-hover: #297CB5;
+    --secondary-accent: #1ABC9C;
+    --header-bg: #2C3E50;
+    --background-light: #F8F9F9;
+    --form-bg: #ECF0F1;
+    --text-dark: #1A5276;
+    --border-light: #ddd;
+    --delete-color: #E74C3C;
+    --cancel-color: #757575;
+    --table-even-row: #F0F4F7;
+    --table-hover: #D5DBDB;
+}
+
+/* Main wrapper for the suppliers page */
+.suppliers-page {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 25px;
+    border-left: 6px solid var(--secondary-accent);
+    border-radius: 8px;
+    background-color: var(--background-light);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    color: var(--text-dark);
+    line-height: 1.6;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Main title styling */
+.suppliers-page h1 {
+    color: var(--primary-color);
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--secondary-accent);
+    text-align: center;
+}
+
+/* Shared styling for both add and edit form sections */
+.suppliers-page .form-section {
+    background-color: var(--form-bg);
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-light);
+}
+
+/* Grid used to align form fields */
+.suppliers-page .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px 25px;
+    margin-bottom: 20px;
+}
+
+/* Basic input and dropdown styling */
+.suppliers-page input,
+.suppliers-page select {
+    padding: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: white;
+}
+
+/* Focus effect for better usability */
+.suppliers-page input:focus,
+.suppliers-page select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 4px rgba(52, 152, 219, 0.2);
+}
+
+/* Container for submit/cancel buttons */
+.suppliers-page .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+    margin-top: 10px;
+}
+
+/* Shared button look */
+.suppliers-page button {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Button hover/pressed states */
+.suppliers-page button:hover {
+    transform: translateY(-1px);
+}
+.suppliers-page button:active {
+    transform: scale(0.98);
+}
+
+/* Primary form submission button styles */
+.suppliers-page button[type="submit"] {
+    background-color: var(--accent-color);
+    color: white;
+    border: 1px solid var(--accent-color);
+}
+.suppliers-page button[type="submit"]:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Remove button styling */
+.suppliers-page button.delete-btn {
+    background-color: var(--delete-color);
+    color: white;
+}
+.suppliers-page button.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Cancel/back buttons */
+.suppliers-page button.cancel-btn,
+.suppliers-page button[type="button"] {
+    background-color: var(--cancel-color);
+    color: white;
+    border: 1px solid var(--cancel-color);
+}
+.suppliers-page button.cancel-btn:hover,
+.suppliers-page button[type="button"]:hover {
+    background-color: #5A5A5A;
+}
+
+/* Wrapper for the table area */
+.suppliers-page .browse-table-section {
+    margin-top: 25px;
+    overflow-x: auto;
+}
+
+/* General table styling */
+.suppliers-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    min-width: 700px;
+}
+
+/* Individual table cells */
+.suppliers-page th,
+.suppliers-page td {
+    border: 1px solid var(--secondary-accent);
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* Table header appearance */
+.suppliers-page th {
+    background-color: var(--header-bg);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Alternating row background for readability */
+.suppliers-page tbody tr:nth-child(even) {
+    background-color: var(--table-even-row);
+}
+
+/* Highlight row on hover */
+.suppliers-page tbody tr:hover {
+    background-color: var(--table-hover);
+    transition: background-color 0.2s ease;
+}
+
+/* Button container inside table cells */
+.suppliers-page td .action-buttons-container {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .suppliers-page {
+        margin: 10px;
+        padding: 15px;
+    }
+    .suppliers-page .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,144 @@
+/* Main layout styling for the reorders page */
+.reorders-page {
+    padding: 20px;
+    border-left: 5px solid #2A9D8F;
+    border-radius: 4px;
+    margin-top: 20px;
+    background-color: #F0FAF8;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Style for the page title */
+.reorders-page h1 {
+    color: #264653;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    padding-bottom: 5px;
+    border-bottom: 1px solid #2A9D8F;
+}
+
+/* Base table setup */
+.reorders-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Shared cell styling */
+.reorders-page th,
+.reorders-page td {
+    border: 1px solid #A8DADC;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+/* Header row look */
+.reorders-page th {
+    background-color: #2A9D8F;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Even row background */
+.reorders-page tr:nth-child(even) {
+    background-color: #F8FDFD;
+}
+
+/* Button base style */
+.reorders-page button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, opacity 0.2s;
+    margin: 0;
+}
+
+/* General hover for buttons */
+.reorders-page button:hover {
+    opacity: 0.85;
+}
+
+/* Button: Add new reorder */
+.reorders-page .add-btn {
+    background-color: #264653;
+    color: white;
+}
+
+/* Button: Mark an order as received */
+.reorders-page .mark-received-btn {
+    background-color: #2A9D8F;
+    color: white;
+}
+
+/* Button: Cancel reorder */
+.reorders-page .cancel-btn {
+    background-color: #E9C46A;
+    color: #264653;
+}
+
+/* Button: Delete reorder */
+.reorders-page .delete-btn {
+    background-color: #E76F51;
+    color: white;
+}
+
+/* Bar containing filters and refresh tools */
+.controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    background-color: #E9F7F5;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Labels inside the control bar */
+.controls-bar label {
+    font-weight: bold;
+    color: #264653;
+}
+
+/* Dropdowns used in filter controls */
+.controls-bar select {
+    margin-left: 10px;
+    padding: 6px 10px;
+    border: 1px solid #A8DADC;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Refresh button style */
+.controls-bar .refresh-btn {
+    background-color: #457B9D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.2s;
+}
+
+/* Refresh button hover feedback */
+.controls-bar .refresh-btn:hover {
+    background-color: #1D3557;
+    opacity: 0.9;
+}
+
+/* Wrapper for action buttons within a table row */
+.reorders-page .action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: flex-start;
+    min-width: 250px;
+}

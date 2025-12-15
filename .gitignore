@@ -1,0 +1,52 @@
+################################
+# 1. Dependency Directories
+################################
+# Node.js dependencies (common for both frontend and backend)
+/node_modules
+/backend/node_modules
+/frontend/node_modules
+/dist
+/build
+/out
+/public
+
+################################
+# 2. Environment Files (CRITICAL SECURITY)
+################################
+# NEVER commit files containing secrets (database creds, API keys, Auth0 secrets)
+.env
+.env.local
+.env.development
+.env.production
+.env.*
+
+################################
+# 3. Development/OS Artifacts
+################################
+# VS Code files
+.vscode/*
+!/frontend/.vscode/settings.json # Optional: if you want to share specific settings
+!/backend/.vscode/settings.json # Optional: if you want to share specific settings
+
+# Logs
+npm-debug.log
+yarn-error.log
+test-output.xml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+################################
+# 4. Specific Framework/Tool Exclusions
+################################
+# Next.js / Vercel (Frontend)
+.next/
+
+# Render/Backend specific logs (if applicable)
+/tmp
+
+# Backup files
+*.bak

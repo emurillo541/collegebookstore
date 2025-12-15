@@ -1,0 +1,257 @@
+/* Theme colors and shared variables */
+:root {
+    --primary-color: #1A5276;       
+    --primary-hover: #2980B9;        
+    --accent-color: #3498DB;         
+    --accent-hover: #2471A3;         
+    --secondary-accent: #1ABC9C;     
+    --header-bg: #2C3E50;            
+    --background-light: #F8F9F9;     
+    --form-bg: #ECF0F1;              
+    --text-dark: #1A5276;           
+    --border-light: #ddd;            
+    --delete-color: #E74C3C;         
+    --cancel-color: #757575;         
+    --table-even-row: #F0F4F7;       
+    --table-hover: #D0D7DD;          
+}
+
+/* Page wrapper */
+.customers-page {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 25px;
+    border-left: 6px solid var(--secondary-accent);
+    border-radius: 8px;
+    background-color: var(--background-light);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* Top heading */
+.customers-page h1 {
+    color: var(--primary-color);
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--secondary-accent);
+    text-align: center;
+}
+
+/* Table wrapper */
+.browse-table-section {
+    margin-top: 25px;
+    overflow-x: auto;
+}
+
+/* Main table */
+.customers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    min-width: 700px;
+}
+
+.customers-table th,
+.customers-table td {
+    border: 1px solid var(--border-light); /* table border */
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.customers-table th {
+    background-color: var(--header-bg);
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.customers-table tbody tr:nth-child(even) {
+    background-color: var(--table-even-row);
+}
+
+.customers-table tbody tr:hover {
+    background-color: var(--table-hover);
+    transition: background-color 0.2s ease;
+}
+
+/* Table action buttons */
+.customer-action-btn {
+    min-width: 90px;
+    padding: 8px 18px;
+    margin: 4px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.1s;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: 0.3px;
+}
+
+.customer-action-btn:active {
+    transform: scale(0.98);
+}
+
+.edit-btn {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+.delete-btn {
+    background-color: var(--delete-color);
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .customers-page {
+        margin: 10px;
+        padding: 15px;
+    }
+    .customers-table {
+        font-size: 14px;
+        min-width: 600px;
+    }
+}
+
+/* Form container */
+.form-section {
+    padding: 20px 30px;
+    margin-bottom: 40px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    background-color: var(--form-bg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.form-section h2 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+/* Form layout */
+.customer-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-dark);
+    font-size: 0.95em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    padding: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    transition: border-color 0.2s;
+    background-color: white;
+}
+
+.form-group input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Submit button inside grid */
+.customer-form-grid button[type="submit"] {
+    grid-column: 1 / -1;
+    padding: 12px;
+    background-color: var(--secondary-accent);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.customer-form-grid button[type="submit"]:hover {
+    background-color: #16A085;
+    transform: translateY(-1px);
+}
+
+/* Buttons at bottom of forms */
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-actions button[type="submit"] {
+    background-color: var(--accent-color);
+    color: white;
+    border: 1px solid var(--accent-color);
+}
+
+.form-actions button[type="submit"]:hover {
+    background-color: var(--accent-hover);
+}
+
+.form-actions button[type="button"] {
+    background-color: var(--cancel-color);
+    color: white;
+    border: 1px solid var(--cancel-color);
+}
+
+.form-actions button[type="button"]:hover {
+    background-color: #616161;
+}
+
+/* Action column */
+.customers-table td:last-child {
+    white-space: nowrap;
+}
+
+.action-buttons-container {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}

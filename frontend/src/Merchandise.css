@@ -1,0 +1,256 @@
+/* Shared color variables used throughout the layout */
+:root {
+    --primary-color: #1A5276; 
+    --primary-hover: #2980B9; 
+    --accent-color: #3498DB; 
+    --accent-hover: #297CB5;
+    --secondary-accent: #1ABC9C; 
+    --header-bg: #2C3E50; 
+    --background-light: #F8F9F9; 
+    --form-bg: #ECF0F1; 
+    --text-dark: #1A5276; 
+    --border-light: #ddd;
+    --delete-color: #E74C3C; 
+    --cancel-color: #757575; 
+    --low-stock-color: #E74C3C; 
+    --table-even-row: #F0F4F7; 
+    --table-hover: #D5DBDB; 
+}
+
+/* Main section wrapping the merchandise page */
+.merchandise-page {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 25px;
+    border-left: 6px solid var(--secondary-accent); 
+    border-radius: 8px;
+    background-color: var(--background-light); 
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    font-family: Arial, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.merchandise-page h1 {
+    color: var(--primary-color);
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--secondary-accent); 
+}
+
+.merchandise-page h2 {
+    color: var(--primary-color);
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+/* Container boxes for Add Item and Edit Item sections */
+.add-item-section,
+.edit-item-section {
+    background-color: var(--form-bg); 
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-light);
+}
+
+/* Grid layout for form fields (4-column arrangement) */
+.form-grid {
+    display: grid;
+    /* Columns: two labels with fixed width + two flexible inputs */
+    grid-template-columns: 120px 1fr 120px 1fr;
+    gap: 15px 30px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Label styling inside the grid */
+.form-grid label {
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Input, select, and textarea styling inside the grid */
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.form-grid input:focus,
+.form-grid select:focus,
+.form-grid textarea:focus {
+    outline: none;
+    border-color: var(--accent-color); 
+    box-shadow: 0 0 4px rgba(52, 152, 219, 0.4); 
+}
+
+/* Footer area for form buttons */
+.form-actions {
+    /* This stretches the actions across all grid columns */
+    grid-column: 1 / span 4; 
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+    margin-top: 10px;
+}
+
+/* For add-item forms where the submit button sits outside the grid */
+.add-item-section button[type="submit"] {
+    display: block;
+    margin: 20px 0 0 auto;
+}
+
+/* General button styling */
+.add-item-section button,
+.edit-item-section button,
+.merchandise-table-section td button {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: background-color 0.3s, opacity 0.2s, transform 0.1s;
+}
+
+.add-item-section button:hover,
+.edit-item-section button:hover,
+.merchandise-table-section td button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.add-item-section button:active,
+.edit-item-section button:active,
+.merchandise-table-section td button:active {
+    transform: scale(0.98);
+}
+
+/* Submit buttons */
+#add-item-form button[type="submit"],
+#edit-item-form button[type="submit"] {
+    background-color: var(--accent-color); 
+    color: white;
+}
+
+/* Edit, cancel, and delete buttons */
+.edit-btn {
+    background-color: var(--accent-color); 
+    color: white;
+    padding: 8px 18px;
+}
+.edit-btn:hover { background-color: var(--accent-hover); }
+
+.cancel-btn {
+    background-color: var(--cancel-color);
+    color: white;
+}
+.cancel-btn:hover { background-color: #5d5d5d; }
+
+.delete-btn {
+    background-color: var(--delete-color); 
+    color: white;
+    padding: 8px 18px;
+}
+.delete-btn:hover { background-color: #c0392b; }
+
+.merchandise-table-section td button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Wrapper around the table */
+.merchandise-table-section {
+    margin-top: 25px;
+}
+
+/* Table design */
+.merchandise-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.merchandise-table-section th,
+.merchandise-table-section td {
+    border: 1px solid var(--secondary-accent);
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.merchandise-table-section th {
+    background-color: var(--header-bg);
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.merchandise-table-section tbody tr:nth-child(even) {
+    background-color: var(--table-even-row);
+}
+
+.merchandise-table-section tbody tr:hover {
+    background-color: var(--table-hover);
+    transition: background-color 0.2s;
+}
+
+/* Highlight for items that are low in stock */
+.low-stock {
+    background-color: var(--low-stock-color); 
+    font-weight: bold;
+    color: white;
+}
+
+/* Horizontal divider used between sections */
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+    );
+    margin: 40px 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .merchandise-page { margin: 10px; padding: 15px; }
+    
+    /* Collapse the form grid into a single column */
+    .form-grid { 
+        grid-template-columns: 1fr; 
+        gap: 5px 0;
+    }
+    
+    /* Labels become full-width on mobile */
+    .form-grid label { 
+        text-align: left;
+        width: 100%; 
+        margin-bottom: 5px;
+    }
+    
+    /* Form buttons adjust to the single-column layout */
+    .form-actions { 
+        grid-column: 1 / span 1; 
+        justify-content: space-around; 
+    }
+
+    .merchandise-table-section { overflow-x: auto; }
+    .merchandise-table { min-width: 700px; }
+}

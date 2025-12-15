@@ -1,0 +1,165 @@
+/* Container for the new sale form */
+.new-sale-form {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+/* Section titles inside the form */
+.new-sale-form h3 {
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+/* Wrapper for each label/input pair */
+.new-sale-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.new-sale-form .form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* All dropdowns and numeric inputs in the form */
+.new-sale-form select,
+.new-sale-form input[type="number"],
+.new-sale-form .line-item-input select,
+.new-sale-form .line-item-input input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+/* Layout for each line item row (product + qty + button) */
+.line-item-input {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+/* Stretch the product selector, keep quantity smaller */
+.line-item-input select { flex-grow: 3; }
+.line-item-input input[type="number"] { flex-grow: 1; max-width: 100px; }
+
+/* Button for adding a new line item */
+.line-item-input button {
+    flex-shrink: 0;
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.line-item-input button:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.line-item-input button:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+}
+
+/* Table for listing all added line items */
+.line-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.line-items-table th,
+.line-items-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.line-items-table th {
+    background-color: #eee;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Align action column in the table */
+.line-items-table td:last-child {
+    text-align: center;
+    width: 80px;
+}
+
+/* Small delete-style buttons used in table rows */
+.small-btn,
+.delete-btn {
+    padding: 5px 10px;
+    font-size: 0.8em;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-btn:hover { background-color: #d32f2f; }
+
+/* Summary area showing total amount */
+.total-summary {
+    text-align: right;
+    font-size: 1.2em;
+    padding: 15px 0;
+    border-top: 2px dashed #ccc;
+    margin-top: 15px;
+}
+
+.total-summary strong { color: #007bff; }
+
+/* Submit button for finalizing the sale */
+.new-sale-form > button[type="submit"] {
+    float: right;
+    clear: both;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.new-sale-form > button[type="submit"]:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.new-sale-form > button[type="submit"]:disabled {
+    background-color: #a0c3e1;
+    cursor: not-allowed;
+}
+
+/* Mobile layout adjustments */
+@media (max-width: 768px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .line-item-input { flex-direction: column; align-items: stretch; }
+    .line-item-input select, .line-item-input input[type="number"] { width: 100%; }
+    .new-sale-form { margin: 10px; padding: 15px; }
+}

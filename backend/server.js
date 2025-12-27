@@ -3,25 +3,14 @@ const express = require('express');
 const cors = require('cors'); 
 const { jwtCheck } = require('./auth-middleware');
 const app = express();
-<<<<<<< HEAD
-const PORT = process.env.PORT || 3000; 
-// --------------------------------------------------------------------------
-
-const allowedOrigins = [
-    
-    process.env.CORS_ORIGIN 
-=======
 const PORT = process.env.PORT || 3066; 
 
 const allowedOrigins = [
-    process.env.FRONTEND_URL 
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
+    process.env.FRONTEND_URL,
 ];
 
-// Configure and apply the CORS middleware
 app.use(cors({
     origin: function(origin, callback) {
-        // Allow requests with no origin (e.g., Postman)
         if (!origin) return callback(null, true);
         
         if (origin.endsWith('.vercel.app')) {
@@ -39,13 +28,8 @@ app.use(cors({
     credentials: true
 }));
 
-// Middleware to parse incoming JSON request bodies
 app.use(express.json());
 
-// --- Database Utility Routes ---
-
-<<<<<<< HEAD
-// GET route to reset the entire database using a stored procedure (Public/Unprotected)
 app.get('/reset-db', async (req, res) => {
     try {
         await db.query('CALL ResetBookstore();');
@@ -56,90 +40,38 @@ app.get('/reset-db', async (req, res) => {
     }
 });
 
-// --------------------------------------------------------------------------
-// --- CRITICAL CHANGE: Apply Auth0 Check to all protected routes below ---
-// --------------------------------------------------------------------------
-// All routes defined *after* this line will require a valid JWT via Auth0.
 app.use(jwtCheck); 
 
-=======
-// GET route to reset the entire database using a stored procedure
-app.get('/reset-db', async (req, res) => {
-    try {
-        await db.query('CALL ResetBookstore();');
-        res.status(200).json({ message: 'Database has been reset successfully!' });
-    } catch (error) {
-        console.error('Error executing ResetBookstore procedure:', error);
-        res.status(500).json({ error: 'Failed to reset database.' });
-    }
-});
-
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
-// ======================================================
-// CUSTOMERS (CRUD)
-// ======================================================
-
-// GET: Retrieve all customer records
 app.get('/customers', async (req, res) => {
-<<<<<<< HEAD
     const query = 
         "SELECT customerID, firstName, lastName, custEmail, addressLine1, addressLine2, custZip FROM Customers ORDER BY lastName, firstName;";
     
     try {
         const results = await db.query(query);
-        // Handle both database return types to ensure the rows array is returned
         const rows = Array.isArray(results) && Array.isArray(results[0]) ? results[0] : results;
         res.status(200).json(rows);
     } catch (error) {
         console.error('CUSTOMER ROUTE CRITICAL ERROR:', error); 
         res.status(500).json({ error: 'Database error fetching customer data.' });
     }
-=======
     const query = 
         "SELECT customerID, firstName, lastName, custEmail, addressLine1, addressLine2, custZip FROM Customers ORDER BY lastName, firstName;";
     
     try {
         const results = await db.query(query);
-        // Handle both database return types to ensure the rows array is returned
         const rows = Array.isArray(results) && Array.isArray(results[0]) ? results[0] : results;
         res.status(200).json(rows);
     } catch (error) {
         console.error('CUSTOMER ROUTE CRITICAL ERROR:', error); 
         res.status(500).json({ error: 'Database error fetching customer data.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// POST: Add a new customer record
 app.post('/customers', async (req, res) => {
-<<<<<<< HEAD
-    const { firstName, lastName, custEmail, addressLine1, addressLine2, custZip } = req.body;
-    const query = 
-        "INSERT INTO Customers (firstName, lastName, custEmail, addressLine1, addressLine2, custZip) VALUES (?, ?, ?, ?, ?, ?);";
-
-    // Use null for any optional fields that were left empty
-    const values = [
-        firstName || null,
-        lastName || null,
-        custEmail || null,
-        addressLine1 || null,
-        addressLine2 || null,
-        custZip || null
-    ];
-
-    try {
-        const [result] = await db.query(query, values);
-        res.status(201).json({ customerID: result.insertId, message: "Customer added successfully." });
-    } catch (error) {
-        console.error('Error creating customer:', error);
-        res.status(500).json({ error: 'Database error creating customer.' });
-    }
-=======
     const { firstName, lastName, custEmail, addressLine1, addressLine2, custZip } = req.body;
     const query = 
         "INSERT INTO Customers (firstName, lastName, custEmail, addressLine1, addressLine2, custZip) VALUES (?, ?, ?, ?, ?, ?);";
 
-    // Use null for any optional fields that were left empty
     const values = [
         firstName || null,
         lastName || null,
@@ -156,14 +88,11 @@ app.post('/customers', async (req, res) => {
         console.error('Error creating customer:', error);
         res.status(500).json({ error: 'Database error creating customer.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
 
-// PUT: Update an existing customer record by ID
 app.put('/customers/:customerID', async (req, res) => {
-<<<<<<< HEAD
-    const customerID = Number(req.params.customerID); // ensure ID is numeric
+    const customerID = Number(req.params.customerID); 
     const { firstName, lastName, custEmail, addressLine1, addressLine2, custZip } = req.body;
     const query = 
         "UPDATE Customers SET firstName = ?, lastName = ?, custEmail = ?, addressLine1 = ?, addressLine2 = ?, custZip = ? WHERE customerID = ?;"; 
@@ -177,8 +106,7 @@ app.put('/customers/:customerID', async (req, res) => {
         console.error('Error updating customer:', error);
         res.status(500).json({ error: 'Database error updating customer.' });
     }
-=======
-    const customerID = Number(req.params.customerID); // ensure ID is numeric
+    const customerID = Number(req.params.customerID); 
     const { firstName, lastName, custEmail, addressLine1, addressLine2, custZip } = req.body;
     const query = 
         "UPDATE Customers SET firstName = ?, lastName = ?, custEmail = ?, addressLine1 = ?, addressLine2 = ?, custZip = ? WHERE customerID = ?;"; 
@@ -192,13 +120,9 @@ app.put('/customers/:customerID', async (req, res) => {
         console.error('Error updating customer:', error);
         res.status(500).json({ error: 'Database error updating customer.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-
-// DELETE: Remove a customer record by ID
 app.delete('/customers/:customerID', async (req, res) => {
-<<<<<<< HEAD
     const query = `DELETE FROM Customers WHERE customerID = ?;`;
     try {
         const [result] = await db.query(query, [req.params.customerID]);
@@ -207,7 +131,6 @@ app.delete('/customers/:customerID', async (req, res) => {
         console.error('Error deleting customer:', error);
         res.status(500).json({ error: 'Database error deleting customer.' });
     }
-=======
     const query = `DELETE FROM Customers WHERE customerID = ?;`;
     try {
         const [result] = await db.query(query, [req.params.customerID]);
@@ -216,16 +139,9 @@ app.delete('/customers/:customerID', async (req, res) => {
         console.error('Error deleting customer:', error);
         res.status(500).json({ error: 'Database error deleting customer.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// ======================================================
-// EMPLOYEES (CRUD)
-// ======================================================
-
-// GET: Retrieve all employee records
 app.get('/employees', async (req, res) => {
-<<<<<<< HEAD
     const query = 
         "SELECT employeeID, firstName, lastName, email, hireDate FROM Employees ORDER BY lastName, firstName;"; 
 
@@ -236,7 +152,6 @@ app.get('/employees', async (req, res) => {
         console.error('Error fetching employees:', error);
         res.status(500).json({ error: 'Database error fetching employee data.' });
     }
-=======
     const query = 
         "SELECT employeeID, firstName, lastName, email, hireDate FROM Employees ORDER BY lastName, firstName;"; 
 
@@ -247,12 +162,9 @@ app.get('/employees', async (req, res) => {
         console.error('Error fetching employees:', error);
         res.status(500).json({ error: 'Database error fetching employee data.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// POST: Add a new employee record
 app.post('/employees', async (req, res) => {
-<<<<<<< HEAD
     const { firstName, lastName, email, hireDate } = req.body;
     const query = 
         "INSERT INTO Employees (firstName, lastName, email, hireDate) VALUES (?, ?, ?, ?);";
@@ -266,7 +178,6 @@ app.post('/employees', async (req, res) => {
         console.error('Error creating employee:', error);
         res.status(500).json({ error: 'Database error creating employee.' });
     }
-=======
     const { firstName, lastName, email, hireDate } = req.body;
     const query = 
         "INSERT INTO Employees (firstName, lastName, email, hireDate) VALUES (?, ?, ?, ?);";
@@ -280,12 +191,9 @@ app.post('/employees', async (req, res) => {
         console.error('Error creating employee:', error);
         res.status(500).json({ error: 'Database error creating employee.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// PUT: Update an existing employee record by ID
 app.put('/employees/:id', async (req, res) => {
-<<<<<<< HEAD
     const employeeID = req.params.id;
     const { firstName, lastName, email, hireDate } = req.body;
     const query = 
@@ -305,7 +213,6 @@ app.put('/employees/:id', async (req, res) => {
         console.error('Error updating employee:', error);
         res.status(500).json({ error: 'Database error updating employee.' });
     }
-=======
     const employeeID = req.params.id;
     const { firstName, lastName, email, hireDate } = req.body;
     const query = 
@@ -325,12 +232,9 @@ app.put('/employees/:id', async (req, res) => {
         console.error('Error updating employee:', error);
         res.status(500).json({ error: 'Database error updating employee.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// DELETE: Remove an employee record by ID
 app.delete('/employees/:employeeID', async (req, res) => {
-<<<<<<< HEAD
     const query = `DELETE FROM Employees WHERE employeeID = ?;`;
     try {
         await db.query(query, [req.params.employeeID]);
@@ -339,7 +243,6 @@ app.delete('/employees/:employeeID', async (req, res) => {
         console.error('Error deleting employee:', error);
         res.status(500).json({ error: 'Database error deleting employee.' });
     }
-=======
     const query = `DELETE FROM Employees WHERE employeeID = ?;`;
     try {
         await db.query(query, [req.params.employeeID]);
@@ -348,16 +251,9 @@ app.delete('/employees/:employeeID', async (req, res) => {
         console.error('Error deleting employee:', error);
         res.status(500).json({ error: 'Database error deleting employee.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// ======================================================
-// SUPPLIERS (CRUD)
-// ======================================================
-
-// GET: Retrieve all supplier records
 app.get('/suppliers', async (req, res) => {
-<<<<<<< HEAD
     const query = 
         "SELECT supplierID, companyName, contactName, supplierEmail, phone FROM Suppliers ORDER BY companyName;";
     try {
@@ -367,7 +263,6 @@ app.get('/suppliers', async (req, res) => {
         console.error('Error fetching suppliers:', error);
         res.status(500).json({ error: 'Database error fetching supplier data.' });
     }
-=======
     const query = 
         "SELECT supplierID, companyName, contactName, supplierEmail, phone FROM Suppliers ORDER BY companyName;";
     try {
@@ -377,12 +272,9 @@ app.get('/suppliers', async (req, res) => {
         console.error('Error fetching suppliers:', error);
         res.status(500).json({ error: 'Database error fetching supplier data.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// POST: Add a new supplier record
 app.post('/suppliers', async (req, res) => {
-<<<<<<< HEAD
     const { companyName, contactName, supplierEmail, phone } = req.body;
     const query = 
         "INSERT INTO Suppliers (companyName, contactName, supplierEmail, phone) VALUES (?, ?, ?, ?);";
@@ -395,7 +287,6 @@ app.post('/suppliers', async (req, res) => {
         console.error('Error creating supplier:', error);
         res.status(500).json({ error: 'Database error creating supplier.' });
     }
-=======
     const { companyName, contactName, supplierEmail, phone } = req.body;
     const query = 
         "INSERT INTO Suppliers (companyName, contactName, supplierEmail, phone) VALUES (?, ?, ?, ?);";
@@ -408,12 +299,9 @@ app.post('/suppliers', async (req, res) => {
         console.error('Error creating supplier:', error);
         res.status(500).json({ error: 'Database error creating supplier.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// PUT: Update an existing supplier record by ID
 app.put('/suppliers/:id', async (req, res) => {
-<<<<<<< HEAD
     const { id } = req.params;
     const { companyName, contactName, supplierEmail, phone } = req.body;
     const query = 
@@ -430,7 +318,6 @@ app.put('/suppliers/:id', async (req, res) => {
         console.error('Error updating supplier:', error);
         res.status(500).json({ error: 'Database error updating supplier.' });
     }
-=======
     const { id } = req.params;
     const { companyName, contactName, supplierEmail, phone } = req.body;
     const query = 
@@ -447,12 +334,9 @@ app.put('/suppliers/:id', async (req, res) => {
         console.error('Error updating supplier:', error);
         res.status(500).json({ error: 'Database error updating supplier.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// DELETE: Remove a supplier record by ID
 app.delete('/suppliers/:id', async (req, res) => {
-<<<<<<< HEAD
     const { id } = req.params;
     const query = `DELETE FROM Suppliers WHERE supplierID = ?`;
     try {
@@ -465,7 +349,6 @@ app.delete('/suppliers/:id', async (req, res) => {
         console.error('Error deleting supplier:', error);
         res.status(500).json({ error: 'Database error deleting supplier.' });
     }
-=======
     const { id } = req.params;
     const query = `DELETE FROM Suppliers WHERE supplierID = ?`;
     try {
@@ -478,16 +361,9 @@ app.delete('/suppliers/:id', async (req, res) => {
         console.error('Error deleting supplier:', error);
         res.status(500).json({ error: 'Database error deleting supplier.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// ======================================================
-// MERCHANDISE (CRUD)
-// ======================================================
-
-// GET: Retrieve all merchandise items, including the associated supplier name
 app.get('/merchandise', async (req, res) => {
-<<<<<<< HEAD
     const query = 
 "SELECT M.itemID, M.itemName, M.ISBN, CAST(M.price AS DECIMAL(10,2)) AS price, M.itemQuantity AS quantityAvailable, M.supplierID, S.companyName AS supplierName FROM Merchandise M LEFT JOIN Suppliers S ON M.supplierID = S.supplierID ORDER BY M.itemName;"; 
 
@@ -498,7 +374,6 @@ app.get('/merchandise', async (req, res) => {
         console.error('Error fetching merchandise:', error);
         res.status(500).json({ error: 'Database error fetching merchandise.' });
     }
-=======
     const query = 
 "SELECT M.itemID, M.itemName, M.ISBN, CAST(M.price AS DECIMAL(10,2)) AS price, M.itemQuantity AS quantityAvailable, M.supplierID, S.companyName AS supplierName FROM Merchandise M LEFT JOIN Suppliers S ON M.supplierID = S.supplierID ORDER BY M.itemName;"; 
 
@@ -509,12 +384,10 @@ app.get('/merchandise', async (req, res) => {
         console.error('Error fetching merchandise:', error);
         res.status(500).json({ error: 'Database error fetching merchandise.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// POST: Add a new merchandise item
+
 app.post('/merchandise/add', async (req, res) => {
-<<<<<<< HEAD
     const { itemName, ISBN, price, supplierID, itemQuantity } = req.body;
     const query = 
 "INSERT INTO Merchandise (itemName, ISBN, price, supplierID, itemQuantity) VALUES (?, ?, ?, ?, ?);";
@@ -528,7 +401,6 @@ app.post('/merchandise/add', async (req, res) => {
         console.error('Error creating merchandise:', error);
         res.status(500).json({ error: 'Database error creating merchandise.' });
     }
-=======
     const { itemName, ISBN, price, supplierID, itemQuantity } = req.body;
     const query = 
 "INSERT INTO Merchandise (itemName, ISBN, price, supplierID, itemQuantity) VALUES (?, ?, ?, ?, ?);";
@@ -542,12 +414,9 @@ app.post('/merchandise/add', async (req, res) => {
         console.error('Error creating merchandise:', error);
         res.status(500).json({ error: 'Database error creating merchandise.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// PUT: Update an existing merchandise item by ID
 app.put('/merchandise/:itemID', async (req, res) => {
-<<<<<<< HEAD
     const { itemID } = req.params;
     const { itemName, ISBN, price, supplierID, itemQuantity } = req.body;
     const query = 
@@ -565,7 +434,6 @@ app.put('/merchandise/:itemID', async (req, res) => {
         console.error('Error updating merchandise:', error);
         res.status(500).json({ error: 'Database error updating merchandise.' });
     }
-=======
     const { itemID } = req.params;
     const { itemName, ISBN, price, supplierID, itemQuantity } = req.body;
     const query = 
@@ -583,12 +451,9 @@ app.put('/merchandise/:itemID', async (req, res) => {
         console.error('Error updating merchandise:', error);
         res.status(500).json({ error: 'Database error updating merchandise.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// DELETE: Remove a merchandise item by ID
 app.delete('/merchandise/:itemID', async (req, res) => {
-<<<<<<< HEAD
     const query = `DELETE FROM Merchandise WHERE itemID = ?;`;
     try {
         await db.query(query, [req.params.itemID]);
@@ -597,7 +462,6 @@ app.delete('/merchandise/:itemID', async (req, res) => {
         console.error('Error deleting merchandise:', error);
         res.status(500).json({ error: 'Database error deleting merchandise.' });
     }
-=======
     const query = `DELETE FROM Merchandise WHERE itemID = ?;`;
     try {
         await db.query(query, [req.params.itemID]);
@@ -606,16 +470,9 @@ app.delete('/merchandise/:itemID', async (req, res) => {
         console.error('Error deleting merchandise:', error);
         res.status(500).json({ error: 'Database error deleting merchandise.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// ======================================================
-// SALES (Header)
-// ======================================================
-
-// GET: Retrieve all sales records with customer and employee names
 app.get('/sales', async (req, res) => {
-<<<<<<< HEAD
     const query = 
 "SELECT S.salesID, S.orderDate, S.totalAmount, S.customerID, S.employeeID, CONCAT(C.firstName, ' ', C.lastName) AS customerName, CONCAT(E.firstName, ' ', E.lastName) AS employeeName FROM Sales S JOIN Customers C ON S.customerID = C.customerID LEFT JOIN Employees E ON S.employeeID = E.employeeID ORDER BY S.orderDate DESC"; 
 
@@ -627,7 +484,6 @@ app.get('/sales', async (req, res) => {
         console.error('Error fetching sales:', error);
         res.status(500).json({ error: 'Database error fetching sales data. Check JOIN conditions and column names.' });
     }
-=======
     const query = 
 "SELECT S.salesID, S.orderDate, S.totalAmount, S.customerID, S.employeeID, CONCAT(C.firstName, ' ', C.lastName) AS customerName, CONCAT(E.firstName, ' ', E.lastName) AS employeeName FROM Sales S JOIN Customers C ON S.customerID = C.customerID LEFT JOIN Employees E ON S.employeeID = E.employeeID ORDER BY S.orderDate DESC"; 
 
@@ -639,12 +495,9 @@ app.get('/sales', async (req, res) => {
         console.error('Error fetching sales:', error);
         res.status(500).json({ error: 'Database error fetching sales data. Check JOIN conditions and column names.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// POST: Create a new sale, insert line items, and update inventory using a transaction
 app.post('/sales', async (req, res) => {
-<<<<<<< HEAD
     const { customerID, employeeID, lineItems } = req.body; 
 
     if (!lineItems || lineItems.length === 0) {
@@ -655,18 +508,13 @@ app.post('/sales', async (req, res) => {
 
     try {
         await connection.beginTransaction();
-
-        // Calculate total from line items
         const total = lineItems.reduce((sum, item) => {
             return sum + (item.quantity * item.priceEach);
         }, 0);
 
-        // Insert sale with calculated total
         const saleInsertQuery = `INSERT INTO Sales (customerID, employeeID, totalAmount) VALUES (?, ?, ?);`;
         const [saleResult] = await connection.query(saleInsertQuery, [customerID, employeeID, total]);
         const newSalesID = saleResult.insertId;
-
-        // Insert line items and update inventory (No change needed, these are single lines)
         const detailInsertQuery = `INSERT INTO SalesDetail (salesID, itemID, itemQuantity, priceEach) VALUES (?, ?, ?, ?);`;
         const inventoryUpdateQuery = `UPDATE Merchandise SET itemQuantity = itemQuantity - ? WHERE itemID = ?;`;
 
@@ -685,53 +533,9 @@ app.post('/sales', async (req, res) => {
     } finally {
         connection.release();
     }
-=======
-    const { customerID, employeeID, lineItems } = req.body; 
-
-    if (!lineItems || lineItems.length === 0) {
-        return res.status(400).json({ error: "At least one line item is required." });
-    }
-
-    const connection = await db.getConnection();
-
-    try {
-        await connection.beginTransaction();
-
-        // Calculate total from line items
-        const total = lineItems.reduce((sum, item) => {
-            return sum + (item.quantity * item.priceEach);
-        }, 0);
-
-        // Insert sale with calculated total
-        const saleInsertQuery = `INSERT INTO Sales (customerID, employeeID, totalAmount) VALUES (?, ?, ?);`;
-        const [saleResult] = await connection.query(saleInsertQuery, [customerID, employeeID, total]);
-        const newSalesID = saleResult.insertId;
-
-        // Insert line items and update inventory (No change needed, these are single lines)
-        const detailInsertQuery = `INSERT INTO SalesDetail (salesID, itemID, itemQuantity, priceEach) VALUES (?, ?, ?, ?);`;
-        const inventoryUpdateQuery = `UPDATE Merchandise SET itemQuantity = itemQuantity - ? WHERE itemID = ?;`;
-
-        for (const item of lineItems) {
-            await connection.query(detailInsertQuery, [newSalesID, item.itemID, item.quantity, item.priceEach]);
-            await connection.query(inventoryUpdateQuery, [item.quantity, item.itemID]);
-        }
-
-        await connection.commit();
-        res.status(201).json({ message: "Sale processed successfully.", salesID: newSalesID, totalAmount: total });
-
-    } catch (error) {
-        await connection.rollback();
-        console.error("Error processing new sale:", error);
-        res.status(500).json({ error: "Failed to process sale.", details: error.message });
-    } finally {
-        connection.release();
-    }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// PUT: Update the customerID and/or employeeID on a sale record
 app.put('/sales/:salesID', async (req, res) => {
-<<<<<<< HEAD
     const { salesID } = req.params;
     const { customerID, employeeID } = req.body;
 
@@ -747,7 +551,6 @@ app.put('/sales/:salesID', async (req, res) => {
         console.error("Error updating sale:", error);
         res.status(500).json({ error: "Failed to update sale." });
     }
-=======
     const { salesID } = req.params;
     const { customerID, employeeID } = req.body;
 
@@ -763,12 +566,9 @@ app.put('/sales/:salesID', async (req, res) => {
         console.error("Error updating sale:", error);
         res.status(500).json({ error: "Failed to update sale." });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// DELETE: Delete/Cancel a sale record
 app.delete('/sales/:salesID', async (req, res) => {
-<<<<<<< HEAD
     const query = `DELETE FROM Sales WHERE salesID = ?;`;
     try {
         await db.query(query, [req.params.salesID]);
@@ -777,7 +577,6 @@ app.delete('/sales/:salesID', async (req, res) => {
         console.error('Error cancelling sale:', error);
         res.status(500).json({ error: 'Database error cancelling sale.' });
     }
-=======
     const query = `DELETE FROM Sales WHERE salesID = ?;`;
     try {
         await db.query(query, [req.params.salesID]);
@@ -786,16 +585,9 @@ app.delete('/sales/:salesID', async (req, res) => {
         console.error('Error cancelling sale:', error);
         res.status(500).json({ error: 'Database error cancelling sale.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// ======================================================
-// SALES DETAIL (Line Items)
-// ======================================================
-
-// GET: Retrieve all line items for a specific sale (by salesID)
 app.get('/salesdetail/:salesID', async (req, res) => {
-<<<<<<< HEAD
     const query = 
 "SELECT SD.salesDetailID, M.itemName, M.ISBN, SD.itemQuantity, SD.priceEach, (SD.itemQuantity * SD.priceEach) AS lineTotal, SD.itemID FROM SalesDetail SD JOIN Merchandise M ON SD.itemID = M.itemID WHERE SD.salesID = ? ORDER BY SD.salesDetailID"; 
 
@@ -806,7 +598,6 @@ app.get('/salesdetail/:salesID', async (req, res) => {
         console.error('Error fetching sales details:', error);
         res.status(500).json({ error: 'Database error fetching sales detail data.' });
     }
-=======
     const query = 
 "SELECT SD.salesDetailID, M.itemName, M.ISBN, SD.itemQuantity, SD.priceEach, (SD.itemQuantity * SD.priceEach) AS lineTotal, SD.itemID FROM SalesDetail SD JOIN Merchandise M ON SD.itemID = M.itemID WHERE SD.salesID = ? ORDER BY SD.salesDetailID"; 
 
@@ -817,12 +608,9 @@ app.get('/salesdetail/:salesID', async (req, res) => {
         console.error('Error fetching sales details:', error);
         res.status(500).json({ error: 'Database error fetching sales detail data.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// POST: Add a new line item to an existing sale
 app.post('/salesdetail', async (req, res) => {
-<<<<<<< HEAD
     const { salesID, itemID, itemQuantity, priceEach } = req.body;
     const insertQuery = 
         "INSERT INTO SalesDetail (salesID, itemID, itemQuantity, priceEach) VALUES (?, ?, ?, ?);";    
@@ -838,7 +626,6 @@ app.post('/salesdetail', async (req, res) => {
         console.error('Error adding sales detail and updating inventory:', error);
         res.status(500).json({ error: 'Database error adding item to sale.' });
     }
-=======
     const { salesID, itemID, itemQuantity, priceEach } = req.body;
     const insertQuery = 
         "INSERT INTO SalesDetail (salesID, itemID, itemQuantity, priceEach) VALUES (?, ?, ?, ?);";    
@@ -854,12 +641,9 @@ app.post('/salesdetail', async (req, res) => {
         console.error('Error adding sales detail and updating inventory:', error);
         res.status(500).json({ error: 'Database error adding item to sale.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// PUT: Update an existing sales detail (line item) and recalculate Sale total (Transaction)
 app.put('/salesdetail/:salesDetailID', async (req, res) => {
-<<<<<<< HEAD
     const salesDetailID = req.params.salesDetailID;
     const { itemQuantity, priceEach } = req.body;
 
@@ -867,8 +651,6 @@ app.put('/salesdetail/:salesDetailID', async (req, res) => {
 
     try {
         await connection.beginTransaction();
-
-        // Get the original quantity to calculate inventory change
         const getDetailsQuery = `SELECT salesID, itemID, itemQuantity FROM SalesDetail WHERE salesDetailID = ?;`;
         const [details] = await connection.query(getDetailsQuery, [salesDetailID]);
 
@@ -878,17 +660,13 @@ app.put('/salesdetail/:salesDetailID', async (req, res) => {
         }
 
         const { salesID, itemID, itemQuantity: oldQuantity } = details[0];
-        const quantityDelta = itemQuantity - oldQuantity; // new quantity minus old quantity
-
-        // Update SalesDetail
+        const quantityDelta = itemQuantity - oldQuantity; 
         const updateDetailQuery = `UPDATE SalesDetail SET itemQuantity = ?, priceEach = ? WHERE salesDetailID = ?;`;
         await connection.query(updateDetailQuery, [itemQuantity, priceEach, salesDetailID]);
 
-        // Update inventory (negative delta = increasing inventory, positive delta = decreasing inventory)
         const inventoryUpdateQuery = `UPDATE Merchandise SET itemQuantity = itemQuantity - ? WHERE itemID = ?;`;
         await connection.query(inventoryUpdateQuery, [quantityDelta, itemID]);
 
-        // Recalculate totalAmount for the parent sale
         const updateTotalQuery = 
             "UPDATE Sales SET totalAmount = ( SELECT COALESCE(SUM(itemQuantity * priceEach),0) FROM SalesDetail WHERE salesID = ? ) WHERE salesID = ?;";
         
@@ -904,7 +682,6 @@ app.put('/salesdetail/:salesDetailID', async (req, res) => {
     } finally {
         connection.release();
     }
-=======
     const salesDetailID = req.params.salesDetailID;
     const { itemQuantity, priceEach } = req.body;
 
@@ -912,8 +689,6 @@ app.put('/salesdetail/:salesDetailID', async (req, res) => {
 
     try {
         await connection.beginTransaction();
-
-        // Get the original quantity to calculate inventory change
         const getDetailsQuery = `SELECT salesID, itemID, itemQuantity FROM SalesDetail WHERE salesDetailID = ?;`;
         const [details] = await connection.query(getDetailsQuery, [salesDetailID]);
 
@@ -923,17 +698,13 @@ app.put('/salesdetail/:salesDetailID', async (req, res) => {
         }
 
         const { salesID, itemID, itemQuantity: oldQuantity } = details[0];
-        const quantityDelta = itemQuantity - oldQuantity; // new quantity minus old quantity
-
-        // Update SalesDetail
+        const quantityDelta = itemQuantity - oldQuantity; 
         const updateDetailQuery = `UPDATE SalesDetail SET itemQuantity = ?, priceEach = ? WHERE salesDetailID = ?;`;
         await connection.query(updateDetailQuery, [itemQuantity, priceEach, salesDetailID]);
 
-        // Update inventory (negative delta = increasing inventory, positive delta = decreasing inventory)
         const inventoryUpdateQuery = `UPDATE Merchandise SET itemQuantity = itemQuantity - ? WHERE itemID = ?;`;
         await connection.query(inventoryUpdateQuery, [quantityDelta, itemID]);
 
-        // Recalculate totalAmount for the parent sale
         const updateTotalQuery = 
             "UPDATE Sales SET totalAmount = ( SELECT COALESCE(SUM(itemQuantity * priceEach),0) FROM SalesDetail WHERE salesID = ? ) WHERE salesID = ?;";
         
@@ -949,23 +720,17 @@ app.put('/salesdetail/:salesDetailID', async (req, res) => {
     } finally {
         connection.release();
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// DELETE: Remove a sales detail (line item) and revert inventory (Transaction)
 app.delete('/salesdetail/:salesDetailID', async (req, res) => {
-<<<<<<< HEAD
     const getDetailsQuery = `SELECT itemID, itemQuantity FROM SalesDetail WHERE salesDetailID = ?;`;
     const deleteQuery = `DELETE FROM SalesDetail WHERE salesDetailID = ?;`;
-    // Increase inventory because the item is no longer sold
     const inventoryRevertQuery = `UPDATE Merchandise SET itemQuantity = itemQuantity + ? WHERE itemID = ?;`;
     
     const connection = await db.getConnection(); 
 
     try {
         await connection.beginTransaction();
-
-        // Get details for inventory reversion
         const [details] = await connection.query(getDetailsQuery, [req.params.salesDetailID]);
         if (details.length === 0) {
             await connection.rollback();
@@ -975,7 +740,6 @@ app.delete('/salesdetail/:salesDetailID', async (req, res) => {
 
         await connection.query(deleteQuery, [req.params.salesDetailID]);
 
-        // Revert item quantity back to inventory
         await connection.query(inventoryRevertQuery, [itemQuantity, itemID]);
 
         await connection.commit();
@@ -987,10 +751,8 @@ app.delete('/salesdetail/:salesDetailID', async (req, res) => {
     } finally {
         connection.release();
     }
-=======
     const getDetailsQuery = `SELECT itemID, itemQuantity FROM SalesDetail WHERE salesDetailID = ?;`;
     const deleteQuery = `DELETE FROM SalesDetail WHERE salesDetailID = ?;`;
-    // Increase inventory because the item is no longer sold
     const inventoryRevertQuery = `UPDATE Merchandise SET itemQuantity = itemQuantity + ? WHERE itemID = ?;`;
     
     const connection = await db.getConnection(); 
@@ -998,7 +760,6 @@ app.delete('/salesdetail/:salesDetailID', async (req, res) => {
     try {
         await connection.beginTransaction();
 
-        // Get details for inventory reversion
         const [details] = await connection.query(getDetailsQuery, [req.params.salesDetailID]);
         if (details.length === 0) {
             await connection.rollback();
@@ -1007,8 +768,6 @@ app.delete('/salesdetail/:salesDetailID', async (req, res) => {
         const { itemID, itemQuantity } = details[0];
 
         await connection.query(deleteQuery, [req.params.salesDetailID]);
-
-        // Revert item quantity back to inventory
         await connection.query(inventoryRevertQuery, [itemQuantity, itemID]);
 
         await connection.commit();
@@ -1020,16 +779,10 @@ app.delete('/salesdetail/:salesDetailID', async (req, res) => {
     } finally {
         connection.release();
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
+
 });
 
-// ======================================================
-// REORDERS (Inventory Management)
-// ======================================================
-
-// GET: Retrieve all reorder records
 app.get('/reorders', async (req, res) => {
-<<<<<<< HEAD
     const query = 
 "SELECT R.reorderID, DATE_FORMAT(R.reorderDate, '%Y-%m-%d') AS reorderDate, R.quantity, R.status, M.itemID, M.itemName, R.supplierID, S.companyName AS supplier FROM Reorders R JOIN Merchandise M ON R.itemID = M.itemID LEFT JOIN Suppliers S ON R.supplierID = S.supplierID ORDER BY R.reorderDate DESC;";
 
@@ -1040,7 +793,6 @@ app.get('/reorders', async (req, res) => {
         console.error('Error fetching reorders:', error);
         res.status(500).json({ error: 'Database error fetching reorder data.' });
     }
-=======
     const query = 
 "SELECT R.reorderID, DATE_FORMAT(R.reorderDate, '%Y-%m-%d') AS reorderDate, R.quantity, R.status, M.itemID, M.itemName, R.supplierID, S.companyName AS supplier FROM Reorders R JOIN Merchandise M ON R.itemID = M.itemID LEFT JOIN Suppliers S ON R.supplierID = S.supplierID ORDER BY R.reorderDate DESC;";
 
@@ -1051,12 +803,9 @@ app.get('/reorders', async (req, res) => {
         console.error('Error fetching reorders:', error);
         res.status(500).json({ error: 'Database error fetching reorder data.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// POST: Create a new reorder request
 app.post('/reorders', async (req, res) => {
-<<<<<<< HEAD
     const { supplierID, itemID, quantity, status } = req.body;
     const validStatuses = ['pending', 'ordered'];
     const statusToSave = status && validStatuses.includes(status.toLowerCase())
@@ -1072,7 +821,6 @@ app.post('/reorders', async (req, res) => {
         );
         const selectQuery = "SELECT reorderID, supplierID, itemID, quantity, status FROM Reorders WHERE reorderID = ?";
 
-        // Fetch the newly created row to return
         const [rows] = await db.query(
             selectQuery,
             [result.insertId]
@@ -1086,7 +834,6 @@ app.post('/reorders', async (req, res) => {
         console.error('Error creating reorder:', error);
         res.status(500).json({ error: 'Database error creating reorder.' });
     }
-=======
     const { supplierID, itemID, quantity, status } = req.body;
     const validStatuses = ['pending', 'ordered'];
     const statusToSave = status && validStatuses.includes(status.toLowerCase())
@@ -1101,8 +848,6 @@ app.post('/reorders', async (req, res) => {
             [supplierID || null, itemID || null, quantity || 0, statusToSave]
         );
         const selectQuery = "SELECT reorderID, supplierID, itemID, quantity, status FROM Reorders WHERE reorderID = ?";
-
-        // Fetch the newly created row to return
         const [rows] = await db.query(
             selectQuery,
             [result.insertId]
@@ -1116,19 +861,14 @@ app.post('/reorders', async (req, res) => {
         console.error('Error creating reorder:', error);
         res.status(500).json({ error: 'Database error creating reorder.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// PUT: Mark a reorder as 'received' and update merchandise inventory (Transaction)
 app.put('/reorders/receive/:reorderID', async (req, res) => {
-<<<<<<< HEAD
     const reorderID = req.params.reorderID;
     const connection = await db.getConnection();
 
     try {
         await connection.beginTransaction();
-
-        // Get details for the reorder, ensuring it's currently 'ordered'
         const [rows] = await connection.query(
             `SELECT itemID, quantity FROM Reorders WHERE reorderID = ? AND status = 'ordered'`,
             [reorderID]
@@ -1142,14 +882,11 @@ app.put('/reorders/receive/:reorderID', async (req, res) => {
         }
 
         const { itemID, quantity } = rows[0];
-
-        // Add quantity to inventory
         await connection.query(
             `UPDATE Merchandise SET itemQuantity = itemQuantity + ? WHERE itemID = ?`,
             [quantity, itemID]
         );
 
-        // Update status to 'received'
         await connection.query(
             `UPDATE Reorders SET status = 'received' WHERE reorderID = ?`,
             [reorderID]
@@ -1168,14 +905,11 @@ app.put('/reorders/receive/:reorderID', async (req, res) => {
     } finally {
         connection.release();
     }
-=======
     const reorderID = req.params.reorderID;
     const connection = await db.getConnection();
 
     try {
         await connection.beginTransaction();
-
-        // Get details for the reorder, ensuring it's currently 'ordered'
         const [rows] = await connection.query(
             `SELECT itemID, quantity FROM Reorders WHERE reorderID = ? AND status = 'ordered'`,
             [reorderID]
@@ -1189,14 +923,11 @@ app.put('/reorders/receive/:reorderID', async (req, res) => {
         }
 
         const { itemID, quantity } = rows[0];
-
-        // Add quantity to inventory
         await connection.query(
             `UPDATE Merchandise SET itemQuantity = itemQuantity + ? WHERE itemID = ?`,
             [quantity, itemID]
         );
 
-        // Update status to 'received'
         await connection.query(
             `UPDATE Reorders SET status = 'received' WHERE reorderID = ?`,
             [reorderID]
@@ -1215,11 +946,7 @@ app.put('/reorders/receive/:reorderID', async (req, res) => {
     } finally {
         connection.release();
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
-
-
-// PUT: Cancel a reorder request if it is 'pending' or 'ordered'
 app.put('/reorders/cancel/:reorderID', async (req, res) => {
     const reorderID = req.params.reorderID;
     const connection = await db.getConnection();
@@ -1242,8 +969,6 @@ app.put('/reorders/cancel/:reorderID', async (req, res) => {
         }
         const selectQuery = 
             "SELECT reorderID, reorderDate, quantity, status, itemID, supplierID FROM Reorders WHERE reorderID = ?";
-
-        // Fetch the updated row to return
         const [updatedRows] = await connection.query(
             selectQuery,
             [reorderID]
@@ -1264,10 +989,7 @@ app.put('/reorders/cancel/:reorderID', async (req, res) => {
         connection.release();
     }
 });
-
-// DELETE: Permanently remove a reorder (only if status is 'pending')
 app.delete('/reorders/:reorderID', async (req, res) => {
-<<<<<<< HEAD
     try {
         const [result] = await db.query(
             `DELETE FROM Reorders WHERE reorderID = ? AND status = 'pending'`,
@@ -1285,7 +1007,6 @@ app.delete('/reorders/:reorderID', async (req, res) => {
         console.error('Error deleting reorder:', error);
         res.status(500).json({ error: 'Database error deleting reorder.' });
     }
-=======
     try {
         const [result] = await db.query(
             `DELETE FROM Reorders WHERE reorderID = ? AND status = 'pending'`,
@@ -1303,34 +1024,23 @@ app.delete('/reorders/:reorderID', async (req, res) => {
         console.error('Error deleting reorder:', error);
         res.status(500).json({ error: 'Database error deleting reorder.' });
     }
->>>>>>> f70325c19ffb9bbf29d35452f9d6ab9cf1fdcca6
 });
 
-// ---------------------------------------------------------------------------------------------------
-// START SERVER FUNCTION AND EXECUTION
-// ---------------------------------------------------------------------------------------------------
-
-// Function to check DB connection and start the Express server
 async function startServer() {
     try {
-        // Test the database connection
         const connection = await db.getConnection(); 
         connection.release();
         console.log("Database connection successful! Starting API server...");
 
-        // Start listening on the specified port
         app.listen(PORT, () => {
             
             console.log(`Express API server running on port ${PORT}`); 
         });
 
     } catch (err) {
-        // Log a fatal error if DB connection fails and exit
         console.error("\n FATAL ERROR: Database Connection Failed!");
         console.error(`\tError Message: ${err.message}\n`);
         process.exit(1); 
     }
 }
-
-// Execute the function to start the server
 startServer();

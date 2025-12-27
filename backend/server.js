@@ -40,6 +40,10 @@ app.get('/reset-db', async (req, res) => {
     }
 });
 
+app.get('/', (req, res) => {
+    res.status(200).send("API is healthy!");
+});
+
 app.use(jwtCheck); 
 
 app.get('/customers', async (req, res) => {

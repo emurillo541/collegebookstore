@@ -41,7 +41,6 @@ app.get('/reset-db', async (req, res) => {
 });
 
 app.use(jwtCheck); 
-
 app.get('/customers', async (req, res) => {
     const query = 
         "SELECT customerID, firstName, lastName, custEmail, addressLine1, addressLine2, custZip FROM Customers ORDER BY lastName, firstName;";
@@ -54,17 +53,6 @@ app.get('/customers', async (req, res) => {
         console.error('CUSTOMER ROUTE CRITICAL ERROR:', error); 
         res.status(500).json({ error: 'Database error fetching customer data.' });
     }
-    const query = 
-        "SELECT customerID, firstName, lastName, custEmail, addressLine1, addressLine2, custZip FROM Customers ORDER BY lastName, firstName;";
-    
-    try {
-        const results = await db.query(query);
-        const rows = Array.isArray(results) && Array.isArray(results[0]) ? results[0] : results;
-        res.status(200).json(rows);
-    } catch (error) {
-        console.error('CUSTOMER ROUTE CRITICAL ERROR:', error); 
-        res.status(500).json({ error: 'Database error fetching customer data.' });
-    }
 });
 
 app.post('/customers', async (req, res) => {

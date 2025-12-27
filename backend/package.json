@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "development": "nodemon server.js",
     "production": "npx forever start server.js",
     "stop_production": "npx forever stop server.js"

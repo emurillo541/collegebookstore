@@ -1,9 +1,9 @@
 const db = require('./db-connector.js');
 const express = require('express');
 const cors = require('cors'); 
-const { jwtCheck } = require('./auth-middleware');
 const app = express();
 const PORT = process.env.PORT || 3066; 
+const { jwtCheck } = require('./auth-middleware');
 
 const allowedOrigins = [
     process.env.FRONTEND_URL,

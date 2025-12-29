@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react'; 
+import { useAuth0 } from '@auth0/auth0-react';
 import './CustomersPage.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
+const AUTH0_AUDIENCE = import.meta.env.VITE_AUTH0_AUDIENCE;
 function CustomersPage() {
-    
-    const { getAccessTokenSilently } = useAuth0(); 
 
-    // State to store list of customers fetched from backend
+    const { getAccessTokenSilently } = useAuth0();
     const [customers, setCustomers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); // Loading indicator
-    const [error, setError] = useState(null); // Error state
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // State for adding a new customer
     const [newCustomer, setNewCustomer] = useState({
         firstName: '',
         lastName: '',
@@ -22,20 +19,17 @@ function CustomersPage() {
         addressLine2: '',
         custZip: '',
     });
-
-    // Editing state and data
     const [isEditing, setIsEditing] = useState(false);
     const [editCustomerData, setEditCustomerData] = useState(null);
-
-    // Function to fetch all customers from backend (READ operation)
     const fetchCustomers = async () => {
         setIsLoading(true);
         setError(null);
         try {
-            
-            const accessToken = await getAccessTokenSilently();
-
-            
+            const accessToken = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: AUTH0_AUDIENCE, 
+                },
+            });
             const res = await fetch(`${API_BASE_URL}/customers`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -43,17 +37,15 @@ function CustomersPage() {
             });
 
             if (!res.ok) {
-                
                 throw new Error(`HTTP error! Status: ${res.status}. Unauthorized or Forbidden.`);
             }
-            
+
             const data = await res.json();
             setCustomers(data);
             setIsLoading(false);
             return data;
         } catch (err) {
             console.error("Error fetching customers:", err);
-            // Display a user-friendly error if authentication failed
             setError(err.message.includes('401') || err.message.includes('403')
                 ? "Authentication failed. Please log out and log back in."
                 : `Error loading data: ${err.message}`
@@ -63,18 +55,16 @@ function CustomersPage() {
         }
     };
 
-    // Fetch customers when component mounts
     useEffect(() => {
-        
+
         if (API_BASE_URL) {
             fetchCustomers();
         } else {
             setError("API Base URL is not configured. Check your VITE_API_BASE_URL environment variable.");
             setIsLoading(false);
         }
-    }, [API_BASE_URL, getAccessTokenSilently]); // Dependency array: fetch on mount and on token/URL change
+    }, [API_BASE_URL, getAccessTokenSilently]); 
 
-    // Handle input changes for adding new customer 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNewCustomer(prev => ({
@@ -83,7 +73,6 @@ function CustomersPage() {
         }));
     };
 
-    // Handle input changes for editing existing customer 
     const handleEditChange = (e) => {
         const { name, value } = e.target;
         setEditCustomerData(prev => ({
@@ -92,7 +81,6 @@ function CustomersPage() {
         }));
     };
 
-    // Submit new customer to backend (CREATE operation)
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -106,14 +94,18 @@ function CustomersPage() {
         };
 
         try {
-            const accessToken = await getAccessTokenSilently(); 
-
-            const response = await fetch(`${API_BASE_URL}/customers`, { 
+            const accessToken = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: AUTH0_AUDIENCE, 
+                },
+            });
+            
+            const response = await fetch(`${API_BASE_URL}/customers`, {
                 method: 'POST',
-                
-                headers: { 
+
+                headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`, 
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(customerData),
             });
@@ -122,7 +114,6 @@ function CustomersPage() {
                 throw new Error(`Failed to add customer: ${response.statusText}`);
             }
 
-            // Clear form and refresh customer list
             setNewCustomer({ firstName: '', lastName: '', custEmail: '', addressLine1: '', addressLine2: '', custZip: '' });
             alert("Customer added successfully!");
             fetchCustomers();
@@ -133,7 +124,6 @@ function CustomersPage() {
         }
     };
 
-    // Submit edits for existing customer (UPDATE operation)
     const handleEditSubmit = async (e) => {
         e.preventDefault();
 
@@ -147,14 +137,17 @@ function CustomersPage() {
         };
 
         try {
-            const accessToken = await getAccessTokenSilently(); 
-            
-            const response = await fetch(`${API_BASE_URL}/customers/${editCustomerData.customerID}`, { 
+            const accessToken = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: AUTH0_AUDIENCE, 
+                },
+            });
+            const response = await fetch(`${API_BASE_URL}/customers/${editCustomerData.customerID}`, {
                 method: 'PUT',
-                
-                headers: { 
+
+                headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`, 
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(updateData),
             });
@@ -166,7 +159,7 @@ function CustomersPage() {
             alert(`Customer ID ${editCustomerData.customerID} updated successfully!`);
             setIsEditing(false);
             setEditCustomerData(null);
-            fetchCustomers(); // Refresh customer list
+            fetchCustomers(); 
 
         } catch (error) {
             console.error("Error updating customer:", error);
@@ -174,7 +167,6 @@ function CustomersPage() {
         }
     };
 
-    // Initialize editing mode with selected customer's data 
     const startEdit = (customer) => {
         setIsEditing(true);
         setEditCustomerData({
@@ -188,20 +180,24 @@ function CustomersPage() {
         });
     };
 
-    // Delete a customer after confirmation (DELETE operation)
     const handleDelete = async (customerID) => {
         if (!window.confirm(`Are you sure you want to delete Customer ID ${customerID}? This action cannot be undone.`)) {
             return;
         }
 
         try {
-            const accessToken = await getAccessTokenSilently(); 
-
-            const response = await fetch(`${API_BASE_URL}/customers/${customerID}`, { 
+            
+            const accessToken = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: AUTH0_AUDIENCE, 
+                },
+            });
+            
+            const response = await fetch(`${API_BASE_URL}/customers/${customerID}`, {
                 method: 'DELETE',
-                
+
                 headers: {
-                    Authorization: `Bearer ${accessToken}`, 
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 
@@ -275,7 +271,7 @@ function CustomersPage() {
                         </form>
                     </div>
                 ) : (
-                    // ... (Add form JSX) ...
+                    
                     <div className="add-form-section">
                         <h2> Add New Customer</h2>
                         <form id="add-customer-form" onSubmit={handleSubmit} className="customer-form-grid">
@@ -311,7 +307,7 @@ function CustomersPage() {
             </section>
 
             <hr />
-            
+
             {/* Table section to browse existing customers */}
             <section className="browse-table-section">
                 <h2>Current Customers</h2>
@@ -321,13 +317,13 @@ function CustomersPage() {
                     <table className="customers-table">
                         <thead>
                             <tr>
-                                <th>Customer ID</th> 
+                                <th>Customer ID</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Customer Email</th> 
+                                <th>Customer Email</th>
                                 <th>Address 1</th>
                                 <th>Address 2</th>
-                                <th>Zip Code</th> 
+                                <th>Zip Code</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -341,20 +337,20 @@ function CustomersPage() {
                                     <td>{c.addressLine1}</td>
                                     <td>{c.addressLine2 || '-'}</td>
                                     <td>{c.custZip}</td>
-                                    
+
                                     <td>
                                         {/* Buttons for edit/delete actions */}
-                                        <div className="action-buttons-container"> 
+                                        <div className="action-buttons-container">
                                             <button
                                                 onClick={() => startEdit(c)}
                                                 disabled={isEditing && editCustomerData.customerID !== c.customerID}
-                                                className="customer-action-btn edit-btn" 
+                                                className="customer-action-btn edit-btn"
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(c.customerID)}
-                                                className="customer-action-btn delete-btn" 
+                                                className="customer-action-btn delete-btn"
                                             >
                                                 Delete
                                             </button>

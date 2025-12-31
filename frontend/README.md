@@ -2,6 +2,8 @@
 
 A full-stack, secure web application for managing sales, customers, employees, suppliers, merchandise, and reorders for a college bookstore. This project demonstrates expertise across the modern application stack, featuring dedicated cloud services for deployment, security, and data management.
 
+**Live Demo:** [https://collegebookstore-three.vercel.app](https://collegebookstore-three.vercel.app)  
+
 ---
 
 ## Project Architecture Overview
@@ -10,11 +12,20 @@ The application is built on a robust, three-tiered, cloud-native architecture.
 
 | Component | Technology | Role | Deployment Service |
 | :--- | :--- | :--- | :--- |
-| **Frontend** | React.js (Vite) | User Interface and interaction logic. | **Vercel** |
+| **Frontend** | React.js (Vite) | User Interface and interaction logic. | **Vercel** ([Live Demo](https://collegebookstore-three.vercel.app)) |
 | **Security/Auth** | **Auth0** | Handles all user identity, authentication, and token management. | **Auth0** |
 | **Backend API** | Node.js (Express.js) | Securely exposes CRUD operations and business logic via REST endpoints. | **Render** |
 | **Database** | **MySQL** | Persistent, scalable relational data storage. | **AWS RDS** |
 
+---
+
+## Live Demo
+
+You can interact with the fully deployed CollegeBookstore web application at:
+
+[👉 Visit the Live Demo](https://collegebookstore-three.vercel.app)
+
+> **Note:** Make sure to create a new user or login with credentials you set up for testing.
 
 ---
 

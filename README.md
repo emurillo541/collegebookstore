@@ -23,7 +23,7 @@ The application is built on a robust, three-tiered, cloud-native architecture.
 
 You can interact with the fully deployed CollegeBookstore web application at:
 
-[👉 Visit the Live Demo](https://collegebookstore-three.vercel.app)
+[Visit the Live Demo](https://collegebookstore-three.vercel.app)
 
 > **Note:** Make sure to create a new user or login with credentials you set up for testing.
 

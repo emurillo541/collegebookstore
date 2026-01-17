@@ -1,4 +1,4 @@
-# 📚 CollegeBookstore Web Application
+# CollegeBookstore Web Application
 
 A full-stack, secure web application for managing sales, customers, employees, suppliers, merchandise, and reorders for a college bookstore. This project demonstrates expertise across the modern application stack, featuring dedicated cloud services for deployment, security, and data management.
 
